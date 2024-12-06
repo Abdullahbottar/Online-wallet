@@ -12,31 +12,64 @@
         <header>
             <h1>Digital Wallet - Update Information</h1>
         </header>
-        <div class="content">
-            <p>Update your personal information below:</p>
-            <label for="update-firstname">First Name:</label>
-            <input type="text" id="update-firstname" placeholder="Enter your first name">
 
-            <label for="update-lastname">Last Name:</label>
-            <input type="text" id="update-lastname" placeholder="Enter your last name">
+        <!-- Information Update Form -->
+        <div class="content active" id="update-info-section">
+            <p>What would you like to update?</p>
 
-            <label for="update-email">Email:</label>
-            <input type="email" id="update-email" placeholder="Enter your email">
+            <!-- Options to choose which information to update -->
+            <form id="update-form">
+                <label for="update-option">Select Information to Update:</label>
+                <select id="update-option">
+                    <option value="">Select an option</option>
+                    <option value="name">First Name / Last Name</option>
+                    <option value="password">Password</option>
+                </select>
 
-            <label for="update-phone">Phone Number:</label>
-            <input type="text" id="update-phone" placeholder="Enter your phone number">
+                <!-- Input fields for updating names -->
+                <div id="name-fields" class="update-fields" style="display: none;">
+                    <label for="update-firstname">First Name:</label>
+                    <input type="text" id="update-firstname" placeholder="Enter your first name">
+                    <br>
+                    <label for="update-lastname">Last Name:</label>
+                    <input type="text" id="update-lastname" placeholder="Enter your last name">
+                </div>
 
-            <label for="update-password">New Password:</label>
-            <input type="password" id="update-password" placeholder="Enter new password">
+                <!-- Input fields for updating password -->
+                <div id="password-fields" class="update-fields" style="display: none;">
+                    <label for="old-password">Old Password:</label>
+                    <input type="password" id="old-password" placeholder="Enter your old password">
+                    <br>
+                    <label for="new-password">New Password:</label>
+                    <input type="password" id="new-password" placeholder="Enter new password">
+                    <br>
+                    <label for="confirm-password">Re-enter New Password:</label>
+                    <input type="password" id="confirm-password" placeholder="Re-enter new password">
+                </div>
+
+                <br><br>
+                <button type="button" onclick="processUpdateInformation()">Submit Changes</button>
+            </form>
+        </div>
+
+        <!-- OTP Verification Form -->
+        <div id="otp-section" class="content">
+            <h2>OTP Verification</h2>
+            <p>An OTP has been sent to your registered email. Please enter it below.</p>
+
+            <div class="otp-input-container">
+                <input type="text" id="otp-1" maxlength="1" oninput="handleInput(this, 'otp-2')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, null)">
+                <input type="text" id="otp-2" maxlength="1" oninput="handleInput(this, 'otp-3')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-1')">
+                <input type="text" id="otp-3" maxlength="1" oninput="handleInput(this, 'otp-4')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-2')">
+                <input type="text" id="otp-4" maxlength="1" oninput="handleInput(this, 'otp-5')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-3')">
+                <input type="text" id="otp-5" maxlength="1" oninput="handleInput(this, 'otp-6')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-4')">
+                <input type="text" id="otp-6" maxlength="1" oninput="handleInput(this, null)" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-5')">
+            </div>
             <br>
-            <br>
-            <button onclick="updateInformation()">Update Information</button>
+            <button onclick="verifyOtp()">Verify OTP</button>
         </div>
     </div>
-    <script>
-        function updateInformation() {
-            alert("Your information has been updated successfully!");
-        }
-    </script>
+
+    <script src="update_information.js"></script>
 </body>
 </html>

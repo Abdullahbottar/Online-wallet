@@ -13,7 +13,9 @@
             <br>
             <h1>Digital Wallet - Online Payment</h1>
         </header>
-        <div class="content">
+
+        <!-- Online Payment Form -->
+        <div class="content active" id="payment-section">
             <br>
             <p>Enter online payment details below:</p>
             <br>
@@ -29,11 +31,25 @@
             <br>
             <button onclick="processOnlinePayment()">Submit Payment</button>
         </div>
+
+        <!-- OTP Verification Form -->
+        <div id="otp-section" class="content">
+            <h2>OTP Verification</h2>
+            <p>An OTP has been sent to your registered email. Please enter it below.</p>
+
+            <div class="otp-input-container">
+                <input type="text" id="otp-1" maxlength="1" oninput="handleInput(this, 'otp-2')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, null)">
+                <input type="text" id="otp-2" maxlength="1" oninput="handleInput(this, 'otp-3')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-1')">
+                <input type="text" id="otp-3" maxlength="1" oninput="handleInput(this, 'otp-4')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-2')">
+                <input type="text" id="otp-4" maxlength="1" oninput="handleInput(this, 'otp-5')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-3')">
+                <input type="text" id="otp-5" maxlength="1" oninput="handleInput(this, 'otp-6')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-4')">
+                <input type="text" id="otp-6" maxlength="1" oninput="handleInput(this, null)" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-5')">
+            </div>
+            <br>
+            <button onclick="verifyOtp()">Verify OTP</button>
+        </div>
     </div>
-    <script>
-        function processOnlinePayment() {
-            alert("Online Payment Processed!");
-        }
-    </script>
+
+    <script src="online_payment.js"></script>
 </body>
 </html>

@@ -1,0 +1,57 @@
+/* Style for the entire body to set a background image */
+body {
+    background-image: url('background.jpg'); /* Replace with the name of your image file */
+    background-size: 100% 100%; /* Stretches the image to fit the page */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the background fixed during scrolling */
+    margin: 0; /* Removes default body margins */
+    font-family: Arial, sans-serif; /* Ensures consistent font styling */
+    color: #fff; /* Makes text readable on a darker background */
+}
+
+
+/* Container styling to make the content stand out */
+.container {
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    padding: 60px 40px; /* Increased padding along the Y-axis (60px) and X-axis (40px) */
+    border-radius: 10px; /* Smooth edges */
+    max-width: 700px; /* Width of the container */
+    width: 80%; /* Ensures responsiveness */
+    min-height: 250px; /* Sets a minimum height to increase size along the Y-axis */
+    margin: 50px auto; /* Centers the box and adds vertical spacing */
+    text-align: center; /* Centers the content inside the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adds a shadow for better visual distinction */
+}
+
+header h1 {
+    font-size: 28px; /* Increases font size of the heading */
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 16px; /* Increases label font size */
+    display: block;
+    margin: 15px 0 5px;
+}
+
+input {
+    width: 85%; /* Increases input field width */
+    padding: 12px; /* Adds padding to the input fields */
+    border-radius: 5px;
+    border: none;
+    font-size: 16px; /* Makes the input text larger */
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px; /* Increases button size */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px; /* Makes button text larger */
+}
+
+    button:hover {
+        background-color: #45a049;
+    }
