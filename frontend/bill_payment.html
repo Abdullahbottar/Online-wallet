@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Wallet - Bill Payment</title>
+    <link rel="stylesheet" href="bill_payment.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <header>
+            <br>
+            <h1>Digital Wallet - Bill Payment</h1>
+        </header>
+        <div class="content">
+            <p>Enter bill payment details below:</p>
+            <br>
+            <label for="bill-number">Customer ID/Reference Number:</label>
+            <br>
+            <input type="text" id="bill-number" placeholder="Enter Customer ID">
+            <br>
+            <label for="amount">Amount:</label>
+            <br>
+            <input type="text" id="amount" placeholder="Enter amount">
+            <br>
+            <br>
+            <br>
+            <button onclick="processBillPayment()">Submit Payment</button>
+        </div>
+    </div>
+    <script>
+        function processBillPayment() {
+            alert("Bill Payment Processed!");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Wallet - Bank Transfer</title>
+    <link rel="stylesheet" href="bank_transfer.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <header>
+            <h1>Digital Wallet - Bank Transfer</h1>
+        </header>
+        <div class="content">
+            <p>Please enter the bank transfer details below:</p>
+            <form>
+                <label for="account-number">Account Number:</label>
+                <input type="text" id="account-number" placeholder="Enter account number" required>
+                <label for="amount">Transfer Amount:</label>
+                <input type="text" id="amount" placeholder="Enter amount" required>
+                <label for="bank-name">Bank Name:</label>
+                <input type="text" id="bank-name" placeholder="Enter bank name" required>
+                <br>
+                <br>
+                <button type="submit" onclick="processBankTransfer()">Submit Transfer</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function processBankTransfer() {
+            alert("Bank Transfer Processed!");
+        }
+    </script>
+</body>
+</html>

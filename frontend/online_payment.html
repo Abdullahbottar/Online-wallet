@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Wallet - Online Payment</title>
+    <link rel="stylesheet" href="online_payment.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <header>
+            <br>
+            <h1>Digital Wallet - Online Payment</h1>
+        </header>
+        <div class="content">
+            <br>
+            <p>Enter online payment details below:</p>
+            <br>
+            <label for="recipient">Recipient Number:</label>
+            <br>
+            <input type="text" id="recipient" placeholder="Enter recipient ID">
+            <br>
+            <label for="amount">Amount:</label>
+            <br>
+            <input type="text" id="amount" placeholder="Enter amount">
+            <br>
+            <br>
+            <br>
+            <button onclick="processOnlinePayment()">Submit Payment</button>
+        </div>
+    </div>
+    <script>
+        function processOnlinePayment() {
+            alert("Online Payment Processed!");
+        }
+    </script>
+</body>
+</html>

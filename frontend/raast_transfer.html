@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Wallet - Raast Transfer</title>
+    <link rel="stylesheet" href="raast_transfer.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <header>
+            <h1>Digital Wallet - Raast Transfer</h1>
+        </header>
+        <div class="content">
+            <br>
+            <p>Enter Raast transfer details below:</p>
+
+            <label for="raast-id">Raast ID:</label>
+            <br>
+            <input type="text" id="raast-id" placeholder="Enter Raast ID">
+            <br>
+            <label for="amount">Amount:</label>
+            <br>
+            <input type="text" id="amount" placeholder="Enter amount">
+            <br>
+            <br>
+            <br>
+            <button onclick="processRaastTransfer()">Submit Transfer</button>
+        </div>
+    </div>
+    <script>
+        function processRaastTransfer() {
+            alert("Raast Transfer Processed!");
+        }
+    </script>
+</body>
+</html>

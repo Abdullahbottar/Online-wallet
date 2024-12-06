@@ -1,0 +1,50 @@
+/* Style for the entire body to set a background image */
+body {
+    background-image: url('background.jpg'); /* Replace with the name of your image file */
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the background fixed during scrolling */
+    margin: 0; /* Removes default body margins */
+    font-family: Arial, sans-serif; /* Ensures consistent font styling */
+    color: #000000; /* Makes text black */
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    height: 100vh; /* Ensures the body occupies the full height of the viewport */
+    text-align: center; /* Centers text within elements */
+}
+
+/* Container styling to make the content stand out */
+.container {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    padding: 60px 30px; /* Increased padding along the Y-axis (60px) and X-axis (40px) */
+    border-radius: 10px; /* Smooth edges */
+    max-width: 700px; /* Width of the container */
+    width: 80%; /* Ensures responsiveness */
+    margin: 0 auto; /* Centers the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adds a shadow for better visual distinction */
+    text-align: center; /* Centers the content inside the box */
+}
+
+/* Header styling */
+header h1 {
+    font-size: 28px; /* Increases font size of the heading */
+    margin-bottom: 20px;
+    color: #000000; /* Black text */
+}
+
+/* Button styling */
+button {
+    width: 85%; /* Increases input field width */
+    padding: 12px; /* Adds padding to the input fields */
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 18px; /* Makes the input text larger */
+    color: #ffffff; /* White text */
+    background-color: #003366; /* Dark blue background for input fields */
+}
+
+    /* Button hover effect */
+    button:hover {
+        background-color: #45a049; /* Green background on hover */
+    }
