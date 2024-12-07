@@ -10,3 +10,28 @@ app.use(express.json());
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
+
+
+const nodemailer=require('nodemailer');
+const crypto= require('crypto');
+const bycrpt=require('bcrypt');
+
+const transporter=nodemailer.createTransport({
+    service:'gmail',
+    auth:{
+        user:'flexable333@gmail.com',
+        pass:'fztb bowq aqgq hyyi'
+    }
+});
+
+function isvalidEmail(email){
+    const regex=/^l2[2-5]\d{4}@lhr\.nu\.edu\.pk$/;
+    return regex.test(email);
+}
+
+function generateOTP(){
+    return crypto.randomInt(100000,999999).toString();
+}
+
+
+//api call for signup
