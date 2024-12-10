@@ -1,5 +1,5 @@
 // Function to process Raast transfer and show OTP form
-function processRaastTransfer() {
+function processTransfer() {
     const paymentType = document.getElementById('payment-type').value;
     const raastId = document.getElementById('raast-id').value.trim();
     const amount = document.getElementById('amount').value.trim();
@@ -13,6 +13,7 @@ function processRaastTransfer() {
         alert("Please fill in all the details before proceeding.");
     }
 }
+
 
 // Restrict input to numeric values
 function isNumber(event) {
@@ -28,7 +29,7 @@ function handleInput(currentBox, nextBoxId) {
 }
 
 // Handle backspace key to move to the previous box
-function handleBackspace(currentBox, prevBoxId) {
+function handleBackspace(currentBox, prevBoxId, event) {
     if (event.key === "Backspace") {
         if (currentBox.value === "" && prevBoxId) {
             const previousBox = document.getElementById(prevBoxId);

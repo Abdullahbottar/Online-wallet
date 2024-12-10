@@ -1,16 +1,26 @@
 // Function to process bill payment and show OTP form
 function processBillPayment() {
+    const company = document.getElementById('company-select').value.trim();
     const billNumber = document.getElementById('bill-number').value.trim();
     const amount = document.getElementById('amount').value.trim();
 
     // Validate user inputs
-    if (billNumber && amount) {
-        alert("An OTP has been sent to your registered email!");
-        document.getElementById('bill-payment-section').classList.remove('active'); // Hide bill payment form
-        document.getElementById('otp-section').classList.add('active'); // Show OTP form
-    } else {
-        alert("Please fill in all the details before proceeding.");
+    if (!company) {
+        alert("Please select a company.");
+        return;
     }
+    if (!billNumber) {
+        alert("Please enter your Customer ID/Reference Number.");
+        return;
+    }
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+    }
+
+    alert(`An OTP has been sent to your registered email for payment to ${company}!`);
+    document.getElementById('bill-payment-section').classList.remove('active'); // Hide bill payment form
+    document.getElementById('otp-section').classList.add('active'); // Show OTP form
 }
 
 // Restrict input to numeric values

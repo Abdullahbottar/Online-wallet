@@ -41,7 +41,7 @@
             <br>
             <br>
             <br>
-            <button onclick="processRaastTransfer()">Submit Transfer</button>
+            <button onclick="processTransfer()">Submit Transfer</button>
         </div>
 
         <!-- OTP Verification Form -->
@@ -50,18 +50,18 @@
             <p>An OTP has been sent to your registered email. Please enter it below.</p>
 
             <div class="otp-input-container">
-                <input type="text" id="otp-1" maxlength="1" oninput="handleInput(this, 'otp-2')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, null)">
-                <input type="text" id="otp-2" maxlength="1" oninput="handleInput(this, 'otp-3')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-1')">
-                <input type="text" id="otp-3" maxlength="1" oninput="handleInput(this, 'otp-4')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-2')">
-                <input type="text" id="otp-4" maxlength="1" oninput="handleInput(this, 'otp-5')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-3')">
-                <input type="text" id="otp-5" maxlength="1" oninput="handleInput(this, 'otp-6')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-4')">
-                <input type="text" id="otp-6" maxlength="1" oninput="handleInput(this, null)" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-5')">
+                <input type="text" id="otp-1" maxlength="1" oninput="handleInput(this, 'otp-2')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, null, event)">
+                <input type="text" id="otp-2" maxlength="1" oninput="handleInput(this, 'otp-3')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-1', event)">
+                <input type="text" id="otp-3" maxlength="1" oninput="handleInput(this, 'otp-4')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-2', event)">
+                <input type="text" id="otp-4" maxlength="1" oninput="handleInput(this, 'otp-5')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-3', event)">
+                <input type="text" id="otp-5" maxlength="1" oninput="handleInput(this, 'otp-6')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-4', event)">
+                <input type="text" id="otp-6" maxlength="1" oninput="handleInput(this, null)" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-5', event)">
             </div>
             <br>
             <button onclick="verifyOtp()">Verify OTP</button>
         </div>
     </div>
 
-    <script src="raast_transfer.js"></script>
+    <script src="Online_transfer.js"></script>
 </body>
 </html>

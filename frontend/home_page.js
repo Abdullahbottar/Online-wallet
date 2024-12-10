@@ -3,9 +3,9 @@ function bankTransfer() {
     window.location.href = 'bank_transfer.html';
 }
 
-function raastTransfer() {
+function Online_transfer() {
    
-    window.location.href = 'raast_transfer.html';
+    window.location.href = 'Online_transfer.html';
 }
 
 function billPayment() {

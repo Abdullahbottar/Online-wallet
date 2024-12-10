@@ -18,14 +18,29 @@
         <div class="content active" id="bill-payment-section">
             <p>Enter bill payment details below:</p>
             <br>
+
+            <!-- Dropdown for selecting company -->
+            <label for="company-select">Select Company:</label>
+            <br>
+            <select id="company-select">
+                <option value="">--Select a company--</option>
+                <option value="LESCO">LESCO</option>
+                <option value="PTCL">PTCL</option>
+                <option value="SNGPL">SNGPL</option>
+                <option value="Water">Water</option>
+            </select>
+            <br>
+
+            <!-- Input for Customer ID -->
             <label for="bill-number">Customer ID/Reference Number:</label>
             <br>
             <input type="text" id="bill-number" placeholder="Enter Customer ID">
             <br>
+
+            <!-- Input for Amount -->
             <label for="amount">Amount:</label>
             <br>
             <input type="text" id="amount" placeholder="Enter amount">
-            <br>
             <br>
             <br>
             <button onclick="processBillPayment()">Submit Payment</button>
