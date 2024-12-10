@@ -70,6 +70,10 @@ function verifyOtp() {
         alert("Invalid OTP. Enter the valid OTP sent via Email.");
     }
 }
+// Redirect to the Forget Password Page
+function redirectToForgotPassword() {
+    window.location.href = "forget_password.html";  // Redirects the user to the forget password page
+}
 
 
 
