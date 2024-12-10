@@ -20,6 +20,6 @@ function viewAccountBalance() {
     window.location.href = 'account_balance.html';
 }
 
-function onlinePayment() {
-    window.location.href = 'online_payment.html';
+function Transactionhistory() {
+    window.location.href = 'Transaction_history.html';
 }

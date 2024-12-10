@@ -42,13 +42,14 @@ label {
 }
 
 /* Input Field Styling */
-input {
+input, select {
     width: 85%;
     padding: 12px;
     border: 1px solid #ddd;
     font-size: 18px;
     background-color: #003366;
     color: #ffffff;
+    border-radius: 5px;
 }
 
 /* Button Styling */

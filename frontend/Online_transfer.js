@@ -1,12 +1,13 @@
-// Function to process online payment and show OTP form
-function processOnlinePayment() {
-    const recipient = document.getElementById('recipient').value.trim();
+// Function to process Raast transfer and show OTP form
+function processRaastTransfer() {
+    const paymentType = document.getElementById('payment-type').value;
+    const raastId = document.getElementById('raast-id').value.trim();
     const amount = document.getElementById('amount').value.trim();
 
     // Validate user inputs
-    if (recipient && amount) {
+    if (paymentType && raastId && amount) {
         alert("An OTP has been sent to your registered email!");
-        document.getElementById('payment-section').classList.remove('active'); // Hide payment form
+        document.getElementById('transfer-section').classList.remove('active'); // Hide transfer form
         document.getElementById('otp-section').classList.add('active'); // Show OTP form
     } else {
         alert("Please fill in all the details before proceeding.");
@@ -45,7 +46,7 @@ function verifyOtp() {
     const correctOtp = "123456"; // Example OTP
 
     if (otp === correctOtp) {
-        alert("OTP verified successfully! Payment completed.");
+        alert("OTP verified successfully! Transfer completed.");
         location.reload(); // Reset the page
     } else {
         alert("Invalid OTP. Please try again.");

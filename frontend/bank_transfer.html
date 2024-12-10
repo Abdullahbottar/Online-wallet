@@ -18,10 +18,19 @@
             <form id="bank-transfer-form">
                 <label for="account-number">Account Number:</label>
                 <input type="text" id="account-number" placeholder="Enter account number" required>
+                
                 <label for="amount">Transfer Amount:</label>
                 <input type="text" id="amount" placeholder="Enter amount" required>
+                
                 <label for="bank-name">Bank Name:</label>
-                <input type="text" id="bank-name" placeholder="Enter bank name" required>
+                <select id="bank-name" required>
+                    <option value="" disabled selected>Select a bank</option>
+                    <option value="Habib Bank Limited">Habib Bank Limited</option>
+                    <option value="Allied Bank Limited">Allied Bank Limited</option>
+                    <option value="Meezan Bank Limited">Meezan Bank Limited</option>
+                    <option value="Standard Chartered Bank Limited">Standard Chartered Bank Limited</option>
+                    <option value="Faisal Bank Limited">Faisal Bank Limited</option>
+                </select>
                 <br><br>
                 <button type="button" onclick="bankTransfer()">Submit Transfer</button>
             </form>

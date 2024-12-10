@@ -3,33 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Wallet - Online Payment</title>
-    <link rel="stylesheet" href="online_payment.css">
+    <title>Online Wallet - Raast Transfer</title>
+    <link rel="stylesheet" href="Online_transfer.css">
 </head>
 <body>
     <div class="background-overlay"></div>
     <div class="container">
         <header>
-            <br>
-            <h1>Digital Wallet - Online Payment</h1>
+            <h1>Digital Wallet - Raast Transfer</h1>
         </header>
 
-        <!-- Online Payment Form -->
-        <div class="content active" id="payment-section">
+        <!-- Raast Transfer Form -->
+        <div class="content active" id="transfer-section">
             <br>
-            <p>Enter online payment details below:</p>
+            <p>Enter Raast transfer details below:</p>
+
+            <label for="payment-type">Payment Type:</label>
             <br>
-            <label for="recipient">Recipient Number:</label>
+            <select id="payment-type">
+                <option value="" disabled selected>Select payment type</option>
+                <option value="easypaisa">Easypaisa</option>
+                <option value="jazzcash">Jazzcash</option>
+                <option value="sadapay">Sadapay</option>
+                <option value="nayapay">Nayapay</option>
+                <option value="upaisa">Upaisa</option>
+            </select>
             <br>
-            <input type="text" id="recipient" placeholder="Enter recipient ID">
+
+            <label for="raast-id">Raast ID:</label>
             <br>
+            <input type="text" id="raast-id" placeholder="Enter Raast ID">
+            <br>
+
             <label for="amount">Amount:</label>
             <br>
             <input type="text" id="amount" placeholder="Enter amount">
             <br>
             <br>
             <br>
-            <button onclick="processOnlinePayment()">Submit Payment</button>
+            <button onclick="processRaastTransfer()">Submit Transfer</button>
         </div>
 
         <!-- OTP Verification Form -->
@@ -50,6 +62,6 @@
         </div>
     </div>
 
-    <script src="online_payment.js"></script>
+    <script src="raast_transfer.js"></script>
 </body>
 </html>
