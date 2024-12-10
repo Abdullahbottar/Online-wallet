@@ -1,13 +1,13 @@
 const express= require('express');
 const supabase=require('./supabaseClient');
 const app = express();
-
 const signupRouter=require('./signup');
 const loginRouter=require('./login');
+const personalRoutes=require('./personal');
 app.use(express.json());
 app.use(signupRouter);
 app.use(loginRouter);
-
+app.use(personalRoutes);
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });

@@ -31,7 +31,6 @@ function checkPhone(phoneNumber){
 //api call to login
 router.post('/api/login', async (req, res) => {
     const { phonenumber, password } = req.body;
-    console.log('Incoming Login Request:', req.body);
     if (!phonenumber || !password) {
         return res.status(400).json({ error: 'All fields are required' });
     }
