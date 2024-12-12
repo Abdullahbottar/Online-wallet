@@ -1,22 +1,39 @@
-// forget_password.js
-
-// Function to validate phone number
+// Function to validate phone number and initiate the password change
 function validatePhoneNumber() {
     const phoneNumber = document.getElementById('phone-number').value.trim();
-    const phoneRegex = /^03\d{9}$/; // Pakistan phone number format (e.g., 03*********).
-
+    const phoneRegex = /^03\d{9}$/;
     if (phoneRegex.test(phoneNumber)) {
-        alert("Phone number validated. Please enter your new password.");
-        showNewPasswordForm();  // Show the new password form
+        alert("Phone number validated. Please check your email for OTP.");
+        fetch('http://localhost:3000/api/initiatePasswordChange', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phonenumber: phoneNumber }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message); 
+                showOtpForm();  
+            } else if (data.error) {
+                alert(data.error);  
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to send OTP. Please try again.');
+        });
     } else {
         alert("Invalid phone number. Please enter a valid phone number.");
     }
 }
 
+
 // Function to show the new password form after phone number validation
 function showNewPasswordForm() {
     // Hide the phone number form and show the new password form
-    document.getElementById('phone-form').style.display = 'none';  
+    document.getElementById('otp-form').style.display = 'none';  
     document.getElementById('new-password-form').style.display = 'block';  
 }
 
@@ -24,40 +41,79 @@ function showNewPasswordForm() {
 function submitNewPassword() {
     const newPassword = document.getElementById('new-password').value.trim();
     const confirmPassword = document.getElementById('confirm-password').value.trim();
-
+    const phoneNumber = document.getElementById('phone-number').value.trim(); 
     if (newPassword && confirmPassword && newPassword === confirmPassword) {
-        alert("New password set. Please verify OTP.");
-        showOtpForm();  // Show OTP verification form
+        if (newPassword.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
+        fetch('http://localhost:3000/api/changepassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phonenumber: phoneNumber,  
+                password: newPassword,
+                confirm_password: confirmPassword
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message); 
+                window.location.href = "main.html";  
+            } else if (data.error) {
+                alert(data.error);  
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to change password. Please try again.');
+        });
     } else {
         alert("Passwords do not match or are empty. Please try again.");
     }
 }
 
-// Function to show OTP form after setting the new password
+// Function to show OTP form
 function showOtpForm() {
-    document.getElementById('new-password-form').style.display = 'none';  // Hide new password form
+    document.getElementById('phone-form').style.display = 'none';  // Hide new password form
     document.getElementById('otp-form').style.display = 'block';  // Show OTP form
 }
 
 // Function to verify OTP
 function verifyOtp() {
-    const otpInputs = Array.from(document.querySelectorAll('.otp-input-container input'));  // Get OTP input fields
-    const otp = otpInputs.map(input => input.value).join('');  // Get OTP entered by user
+    const otpInputs = Array.from(document.querySelectorAll('.otp-input-container input'));  
+    const otp = otpInputs.map(input => input.value).join('');  
+    const phoneNumber = document.getElementById('phone-number').value.trim();  
 
-    const correctOtp = "123456";  // Example OTP for simulation
-
-    if (otp === correctOtp) {
-        alert("OTP verified successfully! You can now login.");
-        window.location.href = "main.html";  // Redirect to login page
-    } else {
-        alert("Invalid OTP. Please try again.");
-    }
+    fetch('http://localhost:3000/api/confirmpasswordotp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phonenumber: phoneNumber, otp: otp }),  
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);  
+            showNewPasswordForm();  
+        } else if (data.error) {
+            alert(data.error);  
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to verify OTP. Please try again.');
+    });
 }
 
 // Restrict input to numeric values only (for OTP)
 function isNumber(event) {
     const charCode = event.which || event.keyCode;
-    return charCode >= 48 && charCode <= 57; // Only allow numbers (0-9)
+    return charCode >= 48 && charCode <= 57;  // Only allow numbers (0-9)
 }
 
 // Handle input and move focus forward when a box is filled

@@ -1,11 +1,9 @@
 const express=require('express');
 const router=express.Router();
 const supabase=require("./supabaseClient");
-
 const nodemailer=require('nodemailer');
 const crypto= require('crypto');
 const bcrypt=require('bcrypt');
-
 const transporter=nodemailer.createTransport({
     service:'gmail',
     auth:{
@@ -114,22 +112,14 @@ router.post('/api/initiatePasswordChange', async (req, res) => {
         res.status(500).json({ error: 'Failed to send OTP email' });
     }
   });
-  
-  
-  //password change api call
-  router.post('/api/changepassword', async (req, res) => {
-    const { phonenumber, otp, password, confirm_password } = req.body;
-    if (!phonenumber || !otp || !password || !confirm_password) {
+  //otp confirmation api call
+  router.post('/api/confirmpasswordotp', async (req, res) => {
+    const{phonenumber,otp}=req.body;
+    if (!phonenumber || !otp) {
         return res.status(400).json({ error: 'All fields are required' });
     }
     if (!checkPhone(phonenumber)) {
         return res.status(400).json({ error: 'Invalid phone number format' });
-    }
-    if (password.length < 8) {
-        return res.status(400).json({ error: 'Password must be at least 8 characters long' });
-    }
-    if (password !== confirm_password) {
-        return res.status(400).json({ error: 'Passwords do not match' });
     }
     const { data: verificationData, error: verificationError } = await supabase
       .from('initiatepasswordchange')
@@ -142,6 +132,32 @@ router.post('/api/initiatePasswordChange', async (req, res) => {
     if (verificationData.otp !== otp) {
         return res.status(400).json({ error: 'Invalid OTP' });
     }
+    const { error: deleteError } = await supabase
+    .from('initiatepasswordchange')
+    .delete()
+    .eq('phonenumber', phonenumber);
+     if (deleteError) {
+          console.error('Supabase deletion error:', deleteError);
+          return res.status(500).json({ error: deleteError.message || 'Error deleting verification data' });
+    }
+    res.status(200).json({ message: 'OTP verified successfully' });
+  });
+  
+  //password change api call
+  router.post('/api/changepassword', async (req, res) => {
+    const { phonenumber,password, confirm_password } = req.body;
+    if (!phonenumber || !password || !confirm_password) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+    if (!checkPhone(phonenumber)) {
+        return res.status(400).json({ error: 'Invalid phone number format' });
+    }
+    if (password.length < 8) {
+        return res.status(400).json({ error: 'Password must be at least 8 characters long' });
+    }
+    if (password !== confirm_password) {
+        return res.status(400).json({ error: 'Passwords do not match' });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const { error: updateError } = await supabase
       .from('account')
@@ -149,14 +165,6 @@ router.post('/api/initiatePasswordChange', async (req, res) => {
       .eq('phonenumber', phonenumber);
     if (updateError) {
         return res.status(500).json({ error: 'Error updating password' });
-    }
-    const { error: deleteError } = await supabase
-      .from('initiatepasswordchange')
-      .delete()
-      .eq('phonenumber', phonenumber);
-    if (deleteError) {
-        console.error('Supabase deletion error:', deleteError);
-        return res.status(500).json({ error: deleteError.message || 'Error deleting verification data' });
     }
     res.status(200).json({ message: 'Password changed successfully' });
   });

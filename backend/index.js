@@ -1,6 +1,7 @@
 const express= require('express');
 const supabase=require('./supabaseClient');
 const app = express();
+const cors=require('cors');
 const signupRouter=require('./signup');
 const loginRouter=require('./login');
 const personalRoutes=require('./personal');
@@ -12,7 +13,9 @@ const requestTransactionBankRouter=require('./bankTransaction');
 const requestewalletRouter=require('./ewalletTransaction');
 const billTransactionRouter=require('./billTransaction');
 const transactionHistoryRouter=require('./transactionHistory');
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(signupRouter);
 app.use(loginRouter);
 app.use(personalRoutes);

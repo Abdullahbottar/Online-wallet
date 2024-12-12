@@ -46,12 +46,13 @@ router.post('/api/verifiyMail',async(req,res)=>{
     .from('account')
     .select('*')
     .eq('phonenumber', phoneNumber)
+    .eq('email', email)
     .single();
     if (errorAccount && errorAccount.code !== 'PGRST116') {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
     if (accountData) {
-        return res.status(400).json({ error: 'Phone Number already exists' });
+        return res.status(400).json({ error: 'Credentials already exists' });
     }
     const { data: existingVerification, error: verificationError } = await supabase
       .from('verification')

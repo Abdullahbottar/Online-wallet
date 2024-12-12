@@ -13,15 +13,73 @@ function showLogin() {
 }
 
 // Login Functionality
-function login() {
-    window.location.href = 'home_page.html';  // Redirect to dashboard after login
+async function login() {
+    const phonenumber = document.getElementById('login-phone').value;
+    const password = document.getElementById('login-password').value;
+    if (!phonenumber || !password) {
+        alert("Please fill out all fields!");
+        return;
+    }
+    try {
+        const response = await fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phonenumber, password }),
+        });
+        const data = await response.json();
+        if (response.ok) {
+            localStorage.setItem('session_id', data.session_id);
+            window.location.href = 'home_page.html';
+        } else {
+            alert(data.error || "Login failed. Please try again.");
+        }
+    } catch (error) {
+        console.error("Error during login:", error);
+        alert("An error occurred while logging in. Please check your connection and try again.");
+    }
 }
 
 // Signup Functionality
 function signup() {
-    // Simulate sending an OTP to the user's email
-    alert("An OTP has been sent to your email!");
-    showOtpForm();  // Show OTP verification form
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+    const confirmPassword = document.getElementById("signup-repassword").value;
+    const phoneNumber = document.getElementById("signup-phone").value;
+    const firstName = document.getElementById("signup-firstname").value;
+    const lastName = document.getElementById("signup-lastname").value;
+    if (!email || !password || !confirmPassword || !phoneNumber || !firstName || !lastName) {
+        alert("Please fill in all fields.");
+        return;
+    }
+    fetch('http://localhost:3000/api/verifiyMail', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email,
+            password,
+            confirm_password: confirmPassword,
+            phoneNumber,
+            first_name: firstName,
+            last_name: lastName,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert("An OTP has been sent to your email!");
+            showOtpForm(); 
+        } else if (data.error) {
+            alert(data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error during signup:', error);
+        alert('An error occurred during signup.');
+    });
 }
 
 // Show OTP Form
@@ -57,25 +115,38 @@ function handleBackspace(currentBox, prevBoxId) {
 
 // Verify OTP Functionality
 function verifyOtp() {
-    // Gather all OTP inputs
     const otpInputs = Array.from(document.querySelectorAll('.otp-input-container input'));
     const otp = otpInputs.map(input => input.value).join('');
-
-    const correctOtp = "123456"; // Example OTP for simulation
-
-    if (otp === correctOtp) {
-        alert("OTP verified successfully! Please log in.");
-        showLogin();
-    } else {
-        alert("Invalid OTP. Enter the valid OTP sent via Email.");
+    if (otp.length !== 6) {
+        alert("Please enter the complete OTP.");
+        return;
     }
+    const email = document.getElementById("signup-email").value;
+    fetch('http://localhost:3000/api/confirmotp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            otp: otp
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            showLogin();
+        } else if (data.error) {
+            alert(data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error during OTP verification:', error);
+        alert('An error occurred during OTP verification.');
+    });
 }
-// Redirect to the Forget Password Page
 function redirectToForgotPassword() {
-    window.location.href = "forget_password.html";  // Redirects the user to the forget password page
+    window.location.href = "forget_password.html"; 
 }
-
-
-
-// Initially show login form on page load
 showLogin();
