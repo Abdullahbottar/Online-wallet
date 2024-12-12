@@ -81,8 +81,9 @@ router.post('/api/requestewallet/:session_id', async (req, res) => {
         let info = await transporter.sendMail({
             from: '"ONLINE WALLET" <flexable333@gmail.com>',
             to: email,
-            text: `Your OTP is: ${otp} to json transaction to online wallet ${ewallet_name} account ${ewallets_number} of amount ${amount}`,
-            html: `<b>Your OTP is: ${otp} to json transaction to online wallet ${ewallet_name} account ${ewallets_number} of amount ${amount}</b>`,
+            subject: 'Verify Your Email for Online wallet Transaction',
+            text: `Your OTP is: ${otp} to confirm transaction to online wallet ${ewallet_name} account ${ewallets_number} of amount ${amount}`,
+            html: `<b>Your OTP is: ${otp} to confirm transaction to online wallet ${ewallet_name} account ${ewallets_number} of amount ${amount}</b>`,
         });
         const { data, error: insertError } = await supabase
             .from('pending_transaction_ewallet')
@@ -162,7 +163,6 @@ router.post('/api/sendewallet/:session_id', async (req, res) => {
         const { data: transactionData, error: transactionError } = await supabase
             .from('transaction_history')
             .insert([{ phonenumber, email, first_name, last_name, amount,sent_to: account_number,company_or_ewallet_name: ewallet_name }]);
-        console.log(transactionError);
         if (transactionError) {
             return res.status(500).json('Error inserting transaction data');
         }
