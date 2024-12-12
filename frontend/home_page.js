@@ -23,3 +23,6 @@ function viewAccountBalance() {
 function Transactionhistory() {
     window.location.href = 'Transaction_history.html';
 }
+function logout() {
+    window.location.href = 'main.html';
+}
