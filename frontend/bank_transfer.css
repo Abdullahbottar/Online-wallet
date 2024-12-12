@@ -100,3 +100,25 @@ button {
             border-color: #45a049;
             box-shadow: 0 0 5px rgba(69, 160, 73, 0.5);
         }
+/* Input Field Styling */
+input, select {
+    width: 85%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    background-color: #003366; /* Same as other input boxes */
+    color: #ffffff;
+    border-radius: 5px; /* To match rounded corners */
+}
+
+/* Focus Effect for Input and Select */
+input:focus, select:focus {
+    outline: none;
+    border-color: #45a049;
+    box-shadow: 0 0 5px rgba(69, 160, 73, 0.5);
+}
+
+/* Placeholder Text for Select */
+select option[disabled] {
+    color: #aaa; /* Placeholder text color */
+}

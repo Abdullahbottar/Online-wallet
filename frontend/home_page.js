@@ -3,9 +3,9 @@ function bankTransfer() {
     window.location.href = 'bank_transfer.html';
 }
 
-function raastTransfer() {
+function Online_transfer() {
    
-    window.location.href = 'raast_transfer.html';
+    window.location.href = 'Online_transfer.html';
 }
 
 function billPayment() {
@@ -20,6 +20,6 @@ function viewAccountBalance() {
     window.location.href = 'account_balance.html';
 }
 
-function onlinePayment() {
-    window.location.href = 'online_payment.html';
+function Transactionhistory() {
+    window.location.href = 'Transaction_history.html';
 }

@@ -42,13 +42,14 @@ label {
 }
 
 /* Input Field Styling */
-input {
+input, select {
     width: 85%;
     padding: 12px;
     border: 1px solid #ddd;
     font-size: 18px;
     background-color: #003366;
     color: #ffffff;
+    border-radius: 5px;
 }
 
 /* Button Styling */
@@ -62,19 +63,19 @@ button {
     font-size: 18px;
 }
 
-    /* Button Hover Effect */
-    button:hover {
-        background-color: #45a049;
-    }
+/* Button Hover Effect */
+button:hover {
+    background-color: #45a049;
+}
 
 /* Content Section Visibility */
 .content {
     display: none;
 }
 
-    .content.active {
-        display: block;
-    }
+.content.active {
+    display: block;
+}
 
 /* Styling for OTP input boxes */
 .otp-input-container {
@@ -84,19 +85,19 @@ button {
     margin-top: 20px;
 }
 
-    .otp-input-container input {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-        text-align: center;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f8f8f8;
-        color: #000;
-    }
+.otp-input-container input {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    color: #000;
+}
 
-        .otp-input-container input:focus {
-            outline: none;
-            border-color: #45a049;
-            box-shadow: 0 0 5px rgba(69, 160, 73, 0.5);
-        }
+.otp-input-container input:focus {
+    outline: none;
+    border-color: #45a049;
+    box-shadow: 0 0 5px rgba(69, 160, 73, 0.5);
+}

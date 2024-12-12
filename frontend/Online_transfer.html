@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Wallet - Raast Transfer</title>
+    <link rel="stylesheet" href="Online_transfer.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <header>
+            <h1>Digital Wallet - Raast Transfer</h1>
+        </header>
+
+        <!-- Raast Transfer Form -->
+        <div class="content active" id="transfer-section">
+            <br>
+            <p>Enter Raast transfer details below:</p>
+
+            <label for="payment-type">Payment Type:</label>
+            <br>
+            <select id="payment-type">
+                <option value="" disabled selected>Select payment type</option>
+                <option value="easypaisa">Easypaisa</option>
+                <option value="jazzcash">Jazzcash</option>
+                <option value="sadapay">Sadapay</option>
+                <option value="nayapay">Nayapay</option>
+                <option value="upaisa">Upaisa</option>
+            </select>
+            <br>
+
+            <label for="raast-id">Raast ID:</label>
+            <br>
+            <input type="text" id="raast-id" placeholder="Enter Raast ID">
+            <br>
+
+            <label for="amount">Amount:</label>
+            <br>
+            <input type="text" id="amount" placeholder="Enter amount">
+            <br>
+            <br>
+            <br>
+            <button onclick="processTransfer()">Submit Transfer</button>
+        </div>
+
+        <!-- OTP Verification Form -->
+        <div id="otp-section" class="content">
+            <h2>OTP Verification</h2>
+            <p>An OTP has been sent to your registered email. Please enter it below.</p>
+
+            <div class="otp-input-container">
+                <input type="text" id="otp-1" maxlength="1" oninput="handleInput(this, 'otp-2')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, null, event)">
+                <input type="text" id="otp-2" maxlength="1" oninput="handleInput(this, 'otp-3')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-1', event)">
+                <input type="text" id="otp-3" maxlength="1" oninput="handleInput(this, 'otp-4')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-2', event)">
+                <input type="text" id="otp-4" maxlength="1" oninput="handleInput(this, 'otp-5')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-3', event)">
+                <input type="text" id="otp-5" maxlength="1" oninput="handleInput(this, 'otp-6')" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-4', event)">
+                <input type="text" id="otp-6" maxlength="1" oninput="handleInput(this, null)" onkeypress="return isNumber(event)" onkeydown="handleBackspace(this, 'otp-5', event)">
+            </div>
+            <br>
+            <button onclick="verifyOtp()">Verify OTP</button>
+        </div>
+    </div>
+
+    <script src="Online_transfer.js"></script>
+</body>
+</html>
