@@ -1,10 +1,9 @@
 // Function to process bill payment and show OTP form
-function processBillPayment() {
+async function processBillPayment() {
     const company = document.getElementById('company-select').value.trim();
     const billNumber = document.getElementById('bill-number').value.trim();
     const amount = document.getElementById('amount').value.trim();
-
-    // Validate user inputs
+    const sessionId = localStorage.getItem('session_id');
     if (!company) {
         alert("Please select a company.");
         return;
@@ -17,47 +16,73 @@ function processBillPayment() {
         alert("Please enter a valid amount.");
         return;
     }
+    try {
+        const response = await fetch(`http://localhost:3000/api/requestbill/${sessionId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: Number(amount),
+                bill_number: billNumber,
+                bill_name: company
+            }),
+        });
 
-    alert(`An OTP has been sent to your registered email for payment to ${company}!`);
-    document.getElementById('bill-payment-section').classList.remove('active'); // Hide bill payment form
-    document.getElementById('otp-section').classList.add('active'); // Show OTP form
-}
-
-// Restrict input to numeric values
-function isNumber(event) {
-    const charCode = event.which || event.keyCode;
-    return charCode >= 48 && charCode <= 57; // Only allow numbers (0-9)
-}
-
-// Handle input and move focus forward
-function handleInput(currentBox, nextBoxId) {
-    if (currentBox.value.length === 1 && nextBoxId) {
-        document.getElementById(nextBoxId).focus(); // Move to the next box when a number is entered
+        const result = await response.json();
+        if (response.ok) {
+            alert(`An OTP has been sent to your registered email for payment to ${company}!`);
+            document.getElementById('bill-payment-section').classList.remove('active'); 
+            document.getElementById('otp-section').classList.add('active'); 
+        } else {
+            alert(result); 
+        }
+    } catch (error) {
+        alert('Error processing the request. Please try again.');
     }
 }
 
-// Handle backspace key to move to the previous box
+function isNumber(event) {
+    const charCode = event.which || event.keyCode;
+    return charCode >= 48 && charCode <= 57; 
+}
+
+function handleInput(currentBox, nextBoxId) {
+    if (currentBox.value.length === 1 && nextBoxId) {
+        document.getElementById(nextBoxId).focus(); 
+    }
+}
+
 function handleBackspace(currentBox, prevBoxId) {
     if (event.key === "Backspace") {
         if (currentBox.value === "" && prevBoxId) {
             const previousBox = document.getElementById(prevBoxId);
-            previousBox.value = ""; // Clear the previous box's value
-            previousBox.focus(); // Move focus to the previous box
+            previousBox.value = ""; 
+            previousBox.focus(); 
         }
     }
 }
 
-// Verify OTP Functionality
-function verifyOtp() {
+async function verifyOtp() {
     const otpInputs = Array.from(document.querySelectorAll('.otp-input-container input'));
     const otp = otpInputs.map(input => input.value).join('');
-
-    const correctOtp = "123456"; // Example OTP
-
-    if (otp === correctOtp) {
-        alert("OTP verified successfully! Payment completed.");
-        location.reload(); // Reset the page
-    } else {
-        alert("Invalid OTP. Please try again.");
+    const sessionId = localStorage.getItem('session_id');
+    try {
+        const response = await fetch(`http://localhost:3000/api/sendbill/${sessionId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ otp }),
+        });
+        const result = await response.json();
+        if (response.ok) {
+            alert("OTP verified successfully! Payment completed.");
+            location.reload(); 
+        } else {
+            alert(result); 
+        }
+    } catch (error) {
+        alert('Error verifying OTP. Please try again.');
     }
 }

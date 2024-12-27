@@ -1,19 +1,71 @@
 // Function to process Raast transfer and show OTP form
-function processTransfer() {
-    const paymentType = document.getElementById('payment-type').value;
+async function processTransfer() {
+    const paymentType = document.getElementById('payment-type').value.trim();
     const raastId = document.getElementById('raast-id').value.trim();
     const amount = document.getElementById('amount').value.trim();
-
-    // Validate user inputs
-    if (paymentType && raastId && amount) {
-        alert("An OTP has been sent to your registered email!");
-        document.getElementById('transfer-section').classList.remove('active'); // Hide transfer form
-        document.getElementById('otp-section').classList.add('active'); // Show OTP form
-    } else {
-        alert("Please fill in all the details before proceeding.");
+    const sessionId = localStorage.getItem('session_id'); 
+    if (!paymentType) {
+        alert("Please select a payment type.");
+        return;
+    }
+    if(!raastId){
+        alert("Please enter your Raast ID.");
+        return;
+    }
+    if(!amount || isNaN(amount) || Number(amount) <= 0){
+        alert("Please enter a valid amount.");
+        return;
+    }
+    try {
+        const response = await fetch(`http://localhost:3000/api/requestewallet/${sessionId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                amount,
+                ewallets_number: raastId,
+                ewallet_name: paymentType
+            })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            alert("An OTP has been sent to your registered email!");
+            document.getElementById('transfer-section').classList.remove('active');
+            document.getElementById('otp-section').classList.add('active'); 
+        } else {
+            alert(data.message || "Something went wrong. Please try again.");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("An error occurred. Please try again.");
     }
 }
 
+async function verifyOtp() {
+    const otpInputs = Array.from(document.querySelectorAll('.otp-input-container input'));
+    const otp = otpInputs.map(input => input.value).join('');
+    const sessionId = localStorage.getItem('session_id');
+    try {
+        const response = await fetch(`http://localhost:3000/api/sendewallet/${sessionId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ otp })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            alert("OTP verified successfully! Transfer completed.");
+            location.reload(); 
+        } else {
+            alert(data.message || "Invalid OTP. Please try again.");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("An error occurred. Please try again.");
+    }
+}
 
 // Restrict input to numeric values
 function isNumber(event) {
@@ -36,20 +88,5 @@ function handleBackspace(currentBox, prevBoxId, event) {
             previousBox.value = ""; // Clear the previous box's value
             previousBox.focus(); // Move focus to the previous box
         }
-    }
-}
-
-// Verify OTP Functionality
-function verifyOtp() {
-    const otpInputs = Array.from(document.querySelectorAll('.otp-input-container input'));
-    const otp = otpInputs.map(input => input.value).join('');
-
-    const correctOtp = "123456"; // Example OTP
-
-    if (otp === correctOtp) {
-        alert("OTP verified successfully! Transfer completed.");
-        location.reload(); // Reset the page
-    } else {
-        alert("Invalid OTP. Please try again.");
     }
 }
