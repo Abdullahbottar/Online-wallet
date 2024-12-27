@@ -1,51 +1,30 @@
-// Mock transaction data
-const transactions = [
-    { id: "T001", date: "2024-12-10", type: "Easypaisa", details: "Phone Payment", amount: "500 PKR" },
-    { id: "T002", date: "2024-12-09", type: "Meezan Bank Transfer", details: "Account: 1234567890", amount: "15,000 PKR" },
-    { id: "T003", date: "2024-12-08", type: "Jazzcash", details: "Wallet Payment", amount: "2,000 PKR" },
-    { id: "T004", date: "2024-12-07", type: "Standard Chartered Bank Transfer", details: "Account: 9876543210", amount: "25,000 PKR" },
-    { id: "T005", date: "2024-12-06", type: "Sadapay", details: "Merchant Payment", amount: "1,000 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T009", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T0010", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T003", date: "2024-12-08", type: "Jazzcash", details: "Wallet Payment", amount: "2,000 PKR" },
-    { id: "T004", date: "2024-12-07", type: "Standard Chartered Bank Transfer", details: "Account: 9876543210", amount: "25,000 PKR" },
-    { id: "T005", date: "2024-12-06", type: "Sadapay", details: "Merchant Payment", amount: "1,000 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T009", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T0010", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    { id: "T006", date: "2024-12-05", type: "Habib Bank Limited Transfer", details: "Account: 1112223334", amount: "10,000 PKR" },
-    { id: "T007", date: "2024-12-04", type: "Nayapay", details: "Bill Payment", amount: "750 PKR" },
-    
+async function fetchTransactionHistory(sessionId) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/transactionHistory/${sessionId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch transaction history');
+        }
+        const data = await response.json();
+        return data.transactions;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}
 
-];
-
-// Populate the table with transaction data
-function loadTransactions() {
+// Populate the table with fetched transaction data
+async function loadTransactions() {
     const transactionBody = document.getElementById("transaction-body");
+    const sessionId = localStorage.getItem('session_id'); 
+    const transactions = await fetchTransactionHistory(sessionId);
+    transactionBody.innerHTML = "";
     transactions.forEach(transaction => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${transaction.id}</td>
-            <td>${transaction.date}</td>
-            <td>${transaction.type}</td>
-            <td>${transaction.details}</td>
+            <td>${transaction.transaction_date}</td>
+            <td>${transaction.company_or_ewallet_name}</td>
+            <td>${transaction.sent_to}</td>
             <td>${transaction.amount}</td>
         `;
         transactionBody.appendChild(row);

@@ -29,14 +29,34 @@ function processUpdateInformation() {
     if (selectedOption === 'name') {
         const firstName = document.getElementById('update-firstname').value;
         const lastName = document.getElementById('update-lastname').value;
-
-        // Simple validation for empty fields
+        const sessionId = localStorage.getItem('session_id');
         if (!firstName || !lastName) {
             alert("Please enter both first name and last name.");
             return;
         }
-
-        alert(`Your name has been updated to: ${firstName} ${lastName}`);
+        fetch(`http://localhost:3000/api/updateName/${sessionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                first_name: firstName,
+                last_name: lastName
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(`Error: ${data.error}`);
+            } else {
+                alert(`Your name has been updated to: ${firstName} ${lastName}`);
+                window.location.href = 'home_page.html';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating the name.');
+        });
     }
 
     // Handle password update
@@ -44,20 +64,39 @@ function processUpdateInformation() {
         const oldPassword = document.getElementById('old-password').value;
         const newPassword = document.getElementById('new-password').value;
         const confirmPassword = document.getElementById('confirm-password').value;
-
-        // Simple validation for empty fields
+        const sessionId = localStorage.getItem('session_id'); 
         if (!oldPassword || !newPassword || !confirmPassword) {
             alert("Please fill out all password fields.");
             return;
         }
-
-        // Check if new password and confirm password match
         if (newPassword !== confirmPassword) {
             alert("The new password and confirm password do not match.");
             return;
         }
-
-        alert("Your password has been updated successfully!");
+        fetch(`http://localhost:3000/api/updatePassword/${sessionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                old_password: oldPassword,
+                new_password: newPassword,
+                confirm_password: confirmPassword
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(`Error: ${data.error}`);
+            } else {
+                alert("Your password has been updated successfully!");
+                window.location.href = 'home_page.html';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating the password.');
+        });
     }
 }
 
