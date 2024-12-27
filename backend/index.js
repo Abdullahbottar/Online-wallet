@@ -13,6 +13,7 @@ const requestTransactionBankRouter=require('./bankTransaction');
 const requestewalletRouter=require('./ewalletTransaction');
 const billTransactionRouter=require('./billTransaction');
 const transactionHistoryRouter=require('./transactionHistory');
+const viewAccountRouter=require('./viewaccount');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +28,7 @@ app.use(requestTransactionBankRouter);
 app.use(requestewalletRouter);
 app.use(billTransactionRouter);
 app.use(transactionHistoryRouter);
+app.use(viewAccountRouter);
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
